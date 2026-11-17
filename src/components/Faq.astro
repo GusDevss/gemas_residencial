@@ -1,0 +1,76 @@
+---
+import Icon from './Icon.astro';
+import { faqs } from '../config/faq';
+import { site, waLink } from '../config/site';
+---
+
+<section id="preguntas" class="section section--paper faq" aria-labelledby="preguntas-title">
+  <div class="container faq-grid">
+    <div class="faq-aside">
+      <p class="eyebrow reveal">08 — Preguntas frecuentes</p>
+      <h2 id="preguntas-title" class="h-section reveal">Resolvemos <em>tus dudas</em></h2>
+      <p class="lead reveal">¿No encuentras lo que buscas? Escríbenos y un asesor te responde personalmente.</p>
+      <div class="faq-contact reveal">
+        <a class="btn btn--wa" href={waLink()} target="_blank" rel="noopener"><Icon name="whatsapp" /> WhatsApp</a>
+        <a class="btn btn--ghost" href={`tel:${site.contact.phoneE164}`}><Icon name="phone" /> {site.contact.phoneDisplay}</a>
+      </div>
+    </div>
+
+    <div class="faq-list" data-accordion>
+      {faqs.map((f, i) => (
+        <details class="faq-item reveal" name="faq" open={i === 0}>
+          <summary>
+            <span class="faq-num">{String(i + 1).padStart(2, '0')}</span>
+            <span class="faq-q">{f.q}</span>
+            <span class="faq-icon" aria-hidden="true"><Icon name="plus" size={18} /></span>
+          </summary>
+          <div class="faq-a"><p>{f.a}</p></div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-grid { display: grid; gap: clamp(40px, 6vw, 90px); }
+  @media (min-width: 1000px) { .faq-grid { grid-template-columns: 0.8fr 1.2fr; align-items: start; } .faq-aside { position: sticky; top: 110px; } }
+  .faq-aside { display: grid; gap: 22px; justify-items: start; }
+  .faq-contact { display: flex; gap: 10px; flex-wrap: wrap; }
+
+  .faq-list { border-top: 1px solid var(--line); }
+  .faq-item { border-bottom: 1px solid var(--line); }
+  .faq-item summary {
+    list-style: none; cursor: pointer; display: grid; grid-template-columns: 40px 1fr 40px; gap: 14px; align-items: center;
+    padding: 24px 0; transition: color 0.3s;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-num { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; color: var(--gold-600); }
+  .faq-q { font-family: var(--font-display); font-size: clamp(22px, 2.2vw, 27px); line-height: 1.2; color: var(--navy); font-weight: 500; }
+  .faq-icon {
+    width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; border: 1px solid var(--line);
+    color: var(--navy); transition: transform 0.45s var(--ease), background 0.3s, color 0.3s;
+  }
+  .faq-item[open] .faq-icon { transform: rotate(45deg); background: var(--navy); color: var(--yellow); border-color: var(--navy); }
+  .faq-item summary:hover .faq-q { color: var(--blue); }
+  .faq-a { display: grid; grid-template-rows: 1fr; padding: 0 54px 26px; color: var(--muted); font-size: 16px; }
+  @media (max-width: 560px) {
+    .faq-item summary { grid-template-columns: 1fr 40px; }
+    .faq-num { display: none; }
+    .faq-a { padding: 0 0 22px; }
+  }
+  /* Animación de apertura donde el navegador lo soporta */
+  .faq-item::details-content { block-size: 0; overflow: clip; transition: block-size 0.45s var(--ease), content-visibility 0.45s allow-discrete; }
+  .faq-item[open]::details-content { block-size: auto; }
+  @supports (interpolate-size: allow-keywords) { :root { interpolate-size: allow-keywords; } }
+</style>
+
+<script>
+  // Acordeón exclusivo: al abrir una pregunta se cierran las demás
+  // (respaldo para navegadores sin soporte del atributo name en <details>)
+  const items = [...document.querySelectorAll<HTMLDetailsElement>('[data-accordion] details')];
+  items.forEach((d) =>
+    d.addEventListener('toggle', () => {
+      if (d.open) items.forEach((o) => { if (o !== d && o.open) o.open = false; });
+    }),
+  );
+</script>

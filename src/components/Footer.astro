@@ -1,0 +1,69 @@
+---
+import Icon from './Icon.astro';
+import { site, waLink } from '../config/site';
+const year = new Date().getFullYear();
+const socials = Object.entries(site.social).filter(([, url]) => url) as [('facebook' | 'instagram' | 'tiktok'), string][];
+---
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="/img/logo-gema-light-300.webp" alt="Residencial Gema" width="160" height="93" loading="lazy" />
+        <p>Privada residencial de 19 casas a 2 km del Centro Histórico de Querétaro.</p>
+        {socials.length > 0 && (
+          <div class="socials">
+            {socials.map(([name, url]) => (
+              <a href={url} target="_blank" rel="noopener" aria-label={name}><Icon name={name} size={20} /></a>
+            ))}
+          </div>
+        )}
+      </div>
+      <nav class="footer-col" aria-label="Secciones">
+        <p class="footer-h">Explora</p>
+        <a href="/#ubicacion">Ubicación</a>
+        <a href="/#modelos">Modelos</a>
+        <a href="/#amenidades">Amenidades</a>
+        <a href="/#galeria">Galería</a>
+        <a href="/#cotizador">Cotizador</a>
+        <a href="/#preguntas">Preguntas frecuentes</a>
+      </nav>
+      <div class="footer-col">
+        <p class="footer-h">Contacto</p>
+        <a href={`tel:${site.contact.phoneE164}`}>{site.contact.phoneDisplay}</a>
+        <a href={waLink()} target="_blank" rel="noopener">WhatsApp</a>
+        <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a>
+        <address>{site.address.full}</address>
+      </div>
+      <div class="footer-cta">
+        <p class="footer-quote">Vivir en Querétaro, <em>vivir como siempre soñaste.</em></p>
+        <a class="btn btn--gold" href="/#contacto">Agenda tu visita</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© {year} Residencial Gema. Todos los derechos reservados.</p>
+      <p><a href="/aviso-de-privacidad/">Aviso de privacidad</a></p>
+      <p class="footer-legal">Imágenes ilustrativas. Precios, disponibilidad y fechas sujetos a cambio sin previo aviso.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer { background: var(--navy-900); color: #b7c3da; padding: clamp(64px, 8vw, 100px) 0 32px; font-size: 15px; }
+  .footer-top { display: grid; gap: 40px; padding-bottom: 48px; border-bottom: 1px solid var(--line-light); }
+  @media (min-width: 900px) { .footer-top { grid-template-columns: 1.2fr 0.7fr 1fr 1.1fr; } }
+  .footer-brand { display: grid; gap: 18px; align-content: start; max-width: 300px; }
+  .footer-brand img { width: 150px; }
+  .socials { display: flex; gap: 10px; }
+  .socials a { width: 42px; height: 42px; border-radius: 50%; border: 1px solid var(--line-light); display: grid; place-items: center; color: #fff; }
+  .socials a:hover { background: var(--yellow); color: var(--navy-900); border-color: var(--yellow); }
+  .footer-col { display: grid; gap: 10px; align-content: start; }
+  .footer-col a:hover { color: var(--yellow); }
+  .footer-col address { font-style: normal; line-height: 1.5; }
+  .footer-h { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--yellow); font-weight: 700; margin-bottom: 6px; }
+  .footer-cta { display: grid; gap: 20px; align-content: start; justify-items: start; }
+  .footer-quote { font-family: var(--font-display); font-size: 30px; line-height: 1.1; color: #fff; }
+  .footer-quote em { color: var(--yellow); }
+  .footer-bottom { display: flex; flex-wrap: wrap; gap: 8px 28px; padding-top: 26px; font-size: 13px; color: #8d9cba; }
+  .footer-bottom a:hover { color: #fff; }
+  .footer-legal { flex-basis: 100%; }
+</style>

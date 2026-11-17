@@ -1,0 +1,65 @@
+---
+/** Iconos de trazo (estilo lineal 1.5px), sin dependencias externas. */
+interface Props {
+  name: keyof typeof icons;
+  size?: number;
+  class?: string;
+  label?: string;
+}
+
+const icons = {
+  whatsapp:
+    '<path fill="currentColor" stroke="none" d="M19.05 4.91A9.82 9.82 0 0 0 12.04 2C6.6 2 2.16 6.43 2.16 11.88c0 1.74.46 3.44 1.32 4.94L2.08 22l5.3-1.39a9.86 9.86 0 0 0 4.66 1.19h.01c5.45 0 9.88-4.43 9.88-9.88a9.8 9.8 0 0 0-2.88-7.01Zm-7.01 15.2h-.01a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3.14.83.84-3.06-.2-.31a8.19 8.19 0 0 1-1.26-4.36c0-4.53 3.69-8.21 8.23-8.21a8.2 8.2 0 0 1 8.22 8.22c0 4.53-3.69 8.22-8.2 8.22Zm4.5-6.15c-.25-.12-1.46-.72-1.69-.8-.23-.08-.39-.12-.56.13-.16.24-.64.8-.78.96-.15.17-.29.19-.54.06-.25-.12-1.04-.38-1.98-1.22-.73-.65-1.23-1.46-1.37-1.7-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.25-.41.08-.17.04-.31-.02-.43-.06-.13-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.42h-.48a.92.92 0 0 0-.66.31c-.23.25-.87.85-.87 2.07s.89 2.4 1.01 2.57c.12.16 1.75 2.67 4.24 3.75.59.25 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.46-.6 1.67-1.18.2-.58.2-1.07.14-1.18-.06-.1-.22-.16-.47-.29Z"/>',
+  phone: '<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/>',
+  mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>',
+  pin: '<path d="M12 22s7-6.2 7-12a7 7 0 1 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="10" r="2.6"/>',
+  arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
+  arrowUp: '<path d="M12 19V5M6 11l6-6 6 6"/>',
+  check: '<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+  close: '<path d="M6 6l12 12M18 6 6 18"/>',
+  menu: '<path d="M4 7h16M4 12h16M4 17h10"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  play: '<path fill="currentColor" stroke="none" d="M8 5.5v13a1 1 0 0 0 1.5.86l10.6-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5Z"/>',
+  calendar: '<rect x="3" y="4.5" width="18" height="16.5" rx="2"/><path d="M16 2.5v4M8 2.5v4M3 10h18"/>',
+  key: '<circle cx="7.5" cy="15.5" r="4.5"/><path d="m10.7 12.3 9.8-9.8M17 6l3 3M14.5 8.5l2 2"/>',
+  home: '<path d="M3 10.5 12 3l9 7.5"/><path d="M5 9v12h14V9"/><path d="M10 21v-6h4v6"/>',
+  shield: '<path d="M12 22s8-3.6 8-10V5l-8-3-8 3v7c0 6.4 8 10 8 10Z"/><path d="m8.5 12 2.5 2.5 4.5-5"/>',
+  tree: '<path d="M12 22v-6"/><path d="M12 16c-4.4 0-7-2.7-7-6a7 7 0 0 1 14 0c0 3.3-2.6 6-7 6Z"/><path d="M9 21h6"/>',
+  kids: '<circle cx="12" cy="5" r="2.2"/><path d="M12 8v6M8 10.5l4 1.5 4-1.5M9 21l3-7 3 7"/>',
+  ball: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.6 5.6c3.4 3 3.4 9.8 0 12.8M18.4 5.6c-3.4 3-3.4 9.8 0 12.8"/>',
+  hall: '<path d="M3 21h18M4 21V9l8-5 8 5v12"/><path d="M9 21v-7h6v7M8 11h0M16 11h0"/>',
+  car: '<path d="M5 17h14M3 17v-4l2-5.5A2 2 0 0 1 6.9 6h10.2a2 2 0 0 1 1.9 1.5L21 13v4"/><circle cx="7.5" cy="17.5" r="1.8"/><circle cx="16.5" cy="17.5" r="1.8"/><path d="M3 13h18"/>',
+  compass: '<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/>',
+  church: '<path d="M12 2v4M10 4h4M7 21V11l5-4 5 4v10M3 21h18M10 21v-4a2 2 0 0 1 4 0v4"/>',
+  wallet: '<path d="M19 7V5a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-4a2 2 0 0 0 0 4h4v2a1 1 0 0 1-1 1H5a2 2 0 0 1-2-2V6"/>',
+  bank: '<path d="M3 10h18L12 4 3 10Z"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 21h18"/>',
+  badge: '<circle cx="12" cy="9" r="6"/><path d="m8.5 14 -1.5 8 5-3 5 3-1.5-8"/>',
+  calc: '<rect x="4" y="2.5" width="16" height="19" rx="2"/><path d="M8 7h8M8 12h.01M12 12h.01M16 12h.01M8 16h.01M12 16h.01M16 16h.01"/>',
+  layers: '<path d="m12 3 9 5-9 5-9-5 9-5Z"/><path d="m3 13 9 5 9-5"/>',
+  sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+  expand: '<path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>',
+  chevronL: '<path d="m15 6-6 6 6 6"/>',
+  chevronR: '<path d="m9 6 6 6-6 6"/>',
+  facebook: '<path fill="currentColor" stroke="none" d="M14 8.5V6.8c0-.8.2-1.3 1.4-1.3H17V2.3a20 20 0 0 0-2.4-.1C12.3 2.2 10.8 3.6 10.8 6.2v2.3H8.2V12h2.6v9.8H14V12h2.6l.4-3.5h-3Z"/>',
+  instagram: '<rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r=".6" fill="currentColor"/>',
+  tiktok: '<path d="M16 3c.3 2.4 1.8 4 4 4.2v3.1c-1.5 0-2.8-.5-4-1.3v6.3A5.7 5.7 0 1 1 10.3 9.6v3.2a2.6 2.6 0 1 0 2.6 2.5V3H16Z"/>',
+} as const;
+
+const { name, size = 22, class: cls, label } = Astro.props;
+---
+
+<svg
+  class={cls}
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="1.5"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+  aria-hidden={label ? undefined : 'true'}
+  role={label ? 'img' : undefined}
+  aria-label={label}
+  set:html={icons[name]}
+/>

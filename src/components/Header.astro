@@ -1,0 +1,166 @@
+---
+import Icon from './Icon.astro';
+import { waLink } from '../config/site';
+
+const nav = [
+  { href: '/#ubicacion', label: 'Ubicación' },
+  { href: '/#modelos', label: 'Modelos' },
+  { href: '/#amenidades', label: 'Amenidades' },
+  { href: '/#galeria', label: 'Galería' },
+  { href: '/#cotizador', label: 'Cotizador' },
+  { href: '/#avance', label: 'Entrega' },
+  { href: '/#preguntas', label: 'Preguntas' },
+];
+---
+
+<header class="site-header" data-header>
+  <div class="container header-inner">
+    <a href="/" class="brand" aria-label="Residencial Gema — inicio">
+      <img class="brand-logo brand-logo--dark" src="/img/logo-gema-300.webp" alt="Residencial Gema" width="150" height="87" />
+      <img class="brand-logo brand-logo--light" src="/img/logo-gema-light-300.webp" alt="" width="150" height="87" aria-hidden="true" />
+    </a>
+
+    <nav class="main-nav" aria-label="Principal">
+      <ul>
+        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="header-cta">
+      <a class="btn btn--gold header-btn" href="/#contacto">Agenda tu visita</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+        <span class="sr-only">Abrir menú</span>
+        <Icon name="menu" size={26} />
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
+    <div class="mobile-menu-top">
+      <img src="/img/logo-gema-light-300.webp" alt="Residencial Gema" width="130" height="75" />
+      <button class="menu-close" type="button" data-menu-close>
+        <span class="sr-only">Cerrar menú</span>
+        <Icon name="close" size={28} />
+      </button>
+    </div>
+    <nav aria-label="Menú móvil">
+      <ol>
+        {nav.map((item, i) => (
+          <li>
+            <a href={item.href} data-menu-link>
+              <span class="num">{String(i + 1).padStart(2, '0')}</span>
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+    <div class="mobile-menu-cta">
+      <a class="btn btn--gold btn--block" href="/#contacto" data-menu-link>Agenda tu visita</a>
+      <a class="btn btn--ghost-light btn--block" href={waLink()} target="_blank" rel="noopener">
+        <Icon name="whatsapp" /> Escríbenos por WhatsApp
+      </a>
+    </div>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: fixed; inset: 0 0 auto; z-index: 100; height: var(--header-h);
+    transition: background 0.4s var(--ease), box-shadow 0.4s var(--ease), height 0.4s var(--ease);
+  }
+  .header-inner { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .brand { position: relative; display: block; width: 118px; flex: none; }
+  .brand-logo { width: 100%; height: auto; transition: opacity 0.35s; }
+  .brand-logo--light { position: absolute; inset: 0; opacity: 0; }
+
+  .main-nav ul { display: flex; gap: clamp(14px, 1.8vw, 30px); list-style: none; margin: 0; padding: 0; }
+  .main-nav a {
+    position: relative; font-size: 14px; font-weight: 600; color: var(--navy); padding: 6px 0;
+  }
+  .main-nav a::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--gold);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.4s var(--ease);
+  }
+  .main-nav a:hover::after, .main-nav a[aria-current='true']::after { transform: scaleX(1); }
+
+  .header-cta { display: flex; align-items: center; gap: 12px; }
+  .header-btn { min-height: 46px; padding-inline: 22px; font-size: 14px; }
+  .menu-toggle, .menu-close {
+    display: none; width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--line);
+    background: rgba(255,255,255,0.7); color: var(--navy); align-items: center; justify-content: center;
+  }
+
+  :global(.site-header.is-scrolled) {
+    background: rgba(247, 246, 242, 0.88);
+    backdrop-filter: saturate(160%) blur(16px);
+    -webkit-backdrop-filter: saturate(160%) blur(16px);
+    box-shadow: 0 1px 0 var(--line);
+    height: 68px;
+  }
+  :global(.site-header.is-scrolled) .brand { width: 100px; }
+
+  @media (max-width: 1080px) {
+    .main-nav { display: none; }
+    .menu-toggle { display: inline-flex; }
+  }
+  @media (max-width: 560px) {
+    .header-btn { display: none; }
+    .brand { width: 104px; }
+  }
+
+  .mobile-menu {
+    position: fixed; inset: 0; z-index: 200; background: var(--navy-900); color: #fff;
+    display: flex; flex-direction: column; padding: 18px var(--gutter) 32px; overflow-y: auto;
+    background-image: radial-gradient(120% 60% at 100% 0%, rgba(254,196,1,0.14), transparent 60%);
+  }
+  .mobile-menu[hidden] { display: none; }
+  .mobile-menu-top { display: flex; justify-content: space-between; align-items: center; }
+  .menu-close { display: inline-flex; background: transparent; color: #fff; border-color: var(--line-light); }
+  .mobile-menu ol { list-style: none; padding: 0; margin: 36px 0; display: grid; gap: 4px; }
+  .mobile-menu ol a {
+    display: flex; align-items: baseline; gap: 16px; padding: 10px 0;
+    font-family: var(--font-display); font-size: clamp(34px, 9vw, 46px); line-height: 1.1;
+    border-bottom: 1px solid var(--line-light);
+  }
+  .mobile-menu .num { font-family: var(--font-body); font-size: 12px; color: var(--yellow); letter-spacing: 0.1em; }
+  .mobile-menu-cta { margin-top: auto; display: grid; gap: 12px; }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 24);
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  const menu = document.querySelector<HTMLElement>('[data-mobile-menu]')!;
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]')!;
+  const open = (state: boolean) => {
+    menu.hidden = !state;
+    toggle.setAttribute('aria-expanded', String(state));
+    document.documentElement.style.overflow = state ? 'hidden' : '';
+    if (state) menu.querySelector<HTMLElement>('[data-menu-close]')?.focus();
+  };
+  toggle.addEventListener('click', () => open(true));
+  menu.querySelector('[data-menu-close]')?.addEventListener('click', () => { open(false); toggle.focus(); });
+  menu.querySelectorAll('[data-menu-link]').forEach((a) => a.addEventListener('click', () => open(false)));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) open(false); });
+
+  // Resaltar sección activa en el menú
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.main-nav a')];
+  const sections = links
+    .map((a) => document.getElementById(a.hash.slice(1)))
+    .filter((el): el is HTMLElement => !!el);
+  if ('IntersectionObserver' in window && sections.length) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          links.forEach((a) => a.setAttribute('aria-current', String(a.hash === '#' + entry.target.id)));
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px' },
+    );
+    sections.forEach((s) => io.observe(s));
+  }
+</script>

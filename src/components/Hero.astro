@@ -1,0 +1,148 @@
+---
+import Icon from './Icon.astro';
+import Picture from './Picture.astro';
+import { project, waLink } from '../config/site';
+---
+
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-bg" aria-hidden="true">
+    <svg class="hero-arc" viewBox="0 0 800 800" fill="none"><circle cx="400" cy="400" r="398" stroke="currentColor" /></svg>
+  </div>
+
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow reveal">Privada residencial · Querétaro</p>
+      <h1 id="hero-title" class="h-display reveal" data-delay="1">
+        Vive a <em>2 km</em> del Centro Histórico de Querétaro
+      </h1>
+      <p class="lead reveal" data-delay="2">
+        Residencial Gema es una privada de solo <strong>{project.totalHomes} casas</strong> sobre Av. Tlacote,
+        con los modelos <strong>Coral</strong> y <strong>Coral Ampliada</strong>. Seguridad, áreas para tu familia
+        y la ciudad a unos minutos.
+      </p>
+
+      <div class="hero-price reveal" data-delay="2">
+        <span class="hero-price-label">Próximamente casas desde</span>
+        <span class="hero-price-value">{project.priceFromLabel}</span>
+      </div>
+
+      <div class="hero-actions reveal" data-delay="3">
+        <a href="#contacto" class="btn">
+          <Icon name="calendar" /> Agenda tu visita
+        </a>
+        <a href={waLink()} class="btn btn--ghost" target="_blank" rel="noopener">
+          <Icon name="whatsapp" /> WhatsApp
+        </a>
+      </div>
+
+      <ul class="hero-pay reveal" data-delay="4" aria-label="Formas de pago">
+        <li><Icon name="check" size={16} /> Crédito INFONAVIT</li>
+        <li><Icon name="check" size={16} /> Crédito hipotecario</li>
+        <li><Icon name="check" size={16} /> Contado</li>
+      </ul>
+    </div>
+
+    <div class="hero-visual reveal" data-delay="2">
+      <div class="hero-frame">
+        <Picture
+          name="fachada-coral"
+          widths={[600, 1000, 1400]}
+          alt="Fachada contemporánea del modelo Coral en Residencial Gema, Querétaro"
+          sizes="(min-width: 980px) 44vw, 92vw"
+          eager
+          width={1000}
+          height={1481}
+        />
+      </div>
+      <div class="hero-badge">
+        <span class="hero-badge-num">2<small>km</small></span>
+        <span class="hero-badge-text">del Centro Histórico<br />de Querétaro</span>
+      </div>
+      <div class="hero-chip">
+        <Icon name="pin" size={18} /> Av. Tlacote 701
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <dl class="hero-stats">
+      <div class="reveal"><dt>Distancia al Centro Histórico</dt><dd>2 <small>km</small></dd></div>
+      <div class="reveal" data-delay="1"><dt>Viviendas en total</dt><dd>{project.totalHomes}</dd></div>
+      <div class="reveal" data-delay="2"><dt>Modelos de casa</dt><dd>2</dd></div>
+      <div class="reveal" data-delay="3"><dt>Escrituración desde</dt><dd>Feb <small>2027</small></dd></div>
+    </dl>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative; overflow: hidden;
+    padding: calc(var(--header-h) + clamp(28px, 6vw, 70px)) 0 clamp(50px, 6vw, 80px);
+    background:
+      radial-gradient(80% 60% at 85% 10%, rgba(254, 196, 1, 0.13), transparent 60%),
+      linear-gradient(180deg, #fbfaf6 0%, var(--ivory) 100%);
+  }
+  .hero-bg { position: absolute; inset: 0; pointer-events: none; }
+  .hero-arc {
+    position: absolute; width: min(1100px, 120vw); right: -30%; top: -10%;
+    color: rgba(223, 178, 1, 0.28);
+  }
+  .hero-grid {
+    position: relative; display: grid; gap: clamp(40px, 6vw, 80px); align-items: center;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 980px) {
+    .hero-grid { grid-template-columns: 1.08fr 0.92fr; }
+  }
+  .hero-copy { display: grid; gap: 26px; justify-items: start; }
+  .hero-copy .lead strong { color: var(--navy); font-weight: 700; }
+
+  .hero-price {
+    display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap;
+    padding: 14px 22px; border-radius: 18px; background: #fff; box-shadow: var(--shadow-s);
+    border: 1px solid rgba(223, 178, 1, 0.45);
+  }
+  .hero-price-label { font-size: 13px; font-weight: 600; color: var(--muted); letter-spacing: 0.02em; }
+  .hero-price-value { font-family: var(--font-display); font-size: 32px; font-weight: 600; color: var(--navy); line-height: 1; }
+
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .hero-pay { display: flex; flex-wrap: wrap; gap: 8px 22px; list-style: none; margin: 0; padding: 0; font-size: 14px; font-weight: 600; color: var(--navy); }
+  .hero-pay li { display: inline-flex; align-items: center; gap: 6px; }
+  .hero-pay :global(svg) { color: var(--gold-600); }
+
+  .hero-visual { position: relative; justify-self: center; width: min(100%, 520px); }
+  .hero-frame {
+    border-radius: var(--arch); overflow: hidden; aspect-ratio: 4 / 5.2; box-shadow: var(--shadow-l);
+    outline: 1px solid rgba(223, 178, 1, 0.5); outline-offset: 12px;
+  }
+  .hero-frame :global(img) { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; }
+
+  .hero-badge {
+    position: absolute; left: -28px; bottom: 54px; display: flex; align-items: center; gap: 14px;
+    background: var(--navy); color: #fff; padding: 18px 24px 18px 20px; border-radius: 20px; box-shadow: var(--shadow);
+  }
+  .hero-badge-num { font-family: var(--font-display); font-size: 58px; line-height: 0.9; color: var(--yellow); font-weight: 600; }
+  .hero-badge-num small { font-size: 22px; margin-left: 2px; }
+  .hero-badge-text { font-size: 13px; line-height: 1.35; font-weight: 600; }
+  .hero-chip {
+    position: absolute; right: -12px; top: 64px; display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); padding: 10px 16px; border-radius: 999px;
+    font-size: 13px; font-weight: 700; color: var(--navy); box-shadow: var(--shadow-s);
+  }
+  .hero-chip :global(svg) { color: var(--gold-600); }
+  @media (max-width: 560px) {
+    .hero-badge { left: -6px; bottom: 28px; padding: 14px 18px 14px 16px; }
+    .hero-badge-num { font-size: 46px; }
+    .hero-chip { right: 4px; top: 28px; }
+  }
+
+  .hero-stats {
+    margin: clamp(56px, 7vw, 96px) 0 0; display: grid; grid-template-columns: repeat(2, 1fr);
+    border-top: 1px solid var(--line);
+  }
+  @media (min-width: 820px) { .hero-stats { grid-template-columns: repeat(4, 1fr); } }
+  .hero-stats > div { padding: 26px 20px 0 0; display: flex; flex-direction: column-reverse; gap: 6px; }
+  .hero-stats dt { font-size: 13px; color: var(--muted); font-weight: 600; }
+  .hero-stats dd { margin: 0; font-family: var(--font-display); font-size: clamp(42px, 5vw, 60px); line-height: 1; color: var(--navy); }
+  .hero-stats dd small { font-size: 0.45em; color: var(--gold-600); }
+</style>

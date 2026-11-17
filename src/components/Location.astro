@@ -1,0 +1,95 @@
+---
+import Icon from './Icon.astro';
+import { site } from '../config/site';
+
+const points = [
+  { icon: 'church', title: 'Centro Histórico a 2 km', text: 'El corazón de Querétaro, Patrimonio de la Humanidad, a unos minutos de tu casa.' },
+  { icon: 'car', title: 'Acceso por Av. Tlacote', text: 'Conectividad directa para moverte con facilidad hacia el centro y el resto de la ciudad.' },
+  { icon: 'compass', title: 'Todo a tu alcance', text: 'Comercios, escuelas, servicios y vida cultural cerca, sin renunciar a la tranquilidad de una privada.' },
+] as const;
+---
+
+<section id="ubicacion" class="section section--navy location" aria-labelledby="ubicacion-title">
+  <div class="container location-grid">
+    <div class="location-copy">
+      <p class="eyebrow reveal">01 — Ubicación privilegiada</p>
+      <div class="big-km reveal" aria-hidden="true">2<span>km</span></div>
+      <h2 id="ubicacion-title" class="h-section reveal">
+        Tan cerca del Centro, <em>tan lejos del ruido</em>
+      </h2>
+      <p class="lead reveal">
+        Residencial Gema se ubica en <strong>{site.address.full}</strong>, a solo 2 km del Centro Histórico de
+        Querétaro. Una ubicación que pocas privadas nuevas pueden ofrecer.
+      </p>
+
+      <ul class="points">
+        {points.map((p, i) => (
+          <li class="reveal" data-delay={String(i + 1)}>
+            <span class="point-icon"><Icon name={p.icon} /></span>
+            <div>
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="location-map reveal" data-delay="2">
+      <div class="map-frame">
+        <iframe
+          title="Mapa de ubicación de Residencial Gema en Av. Tlacote 701, Querétaro"
+          src={site.maps.embed}
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          allowfullscreen></iframe>
+      </div>
+      <div class="map-card">
+        <div>
+          <span class="map-card-label">Dirección</span>
+          <address>{site.address.street}<br />{site.address.postalCode} {site.address.city}, Qro.</address>
+        </div>
+        <a class="btn btn--gold" href={site.maps.link} target="_blank" rel="noopener">
+          <Icon name="pin" /> Cómo llegar
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .location { overflow: hidden; background:
+    radial-gradient(70% 70% at 0% 0%, rgba(23, 63, 122, 0.9), transparent 70%), var(--navy); }
+  .location-grid { display: grid; gap: clamp(48px, 6vw, 90px); align-items: center; }
+  @media (min-width: 1000px) { .location-grid { grid-template-columns: 1fr 1fr; } }
+  .location-copy { display: grid; gap: 24px; }
+  .location-copy strong { color: #fff; font-weight: 600; }
+  .big-km {
+    font-family: var(--font-display); font-weight: 500; line-height: 0.8; color: var(--yellow);
+    font-size: clamp(130px, 20vw, 240px); letter-spacing: -0.04em; margin: 4px 0 -6px;
+  }
+  .big-km span { font-size: 0.32em; margin-left: 8px; letter-spacing: 0; font-style: italic; }
+
+  .points { list-style: none; padding: 0; margin: 10px 0 0; display: grid; gap: 4px; }
+  .points li { display: grid; grid-template-columns: 52px 1fr; gap: 18px; padding: 18px 0; border-top: 1px solid var(--line-light); }
+  .point-icon {
+    width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center;
+    border: 1px solid rgba(254, 196, 1, 0.5); color: var(--yellow);
+  }
+  .points h3 { font-family: var(--font-body); font-size: 17px; font-weight: 700; letter-spacing: 0; margin-bottom: 4px; }
+  .points p { color: #b7c3da; font-size: 15px; }
+
+  .location-map { position: relative; }
+  .map-frame {
+    border-radius: var(--radius-l); overflow: hidden; aspect-ratio: 4 / 4.4; background: var(--navy-900);
+    box-shadow: var(--shadow-l); border: 1px solid var(--line-light);
+  }
+  .map-frame iframe { width: 100%; height: 100%; border: 0; filter: saturate(0.85) contrast(1.02); }
+  .map-card {
+    position: relative; margin: -70px 20px 0; display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; flex-wrap: wrap; background: #fff; color: var(--ink); padding: 20px 22px; border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .map-card-label { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold-600); font-weight: 700; }
+  .map-card address { font-style: normal; font-weight: 600; color: var(--navy); line-height: 1.45; margin-top: 4px; }
+</style>

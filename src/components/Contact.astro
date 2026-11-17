@@ -1,0 +1,255 @@
+---
+import Icon from './Icon.astro';
+import Picture from './Picture.astro';
+import { models, site, waLink } from '../config/site';
+
+const endpoint = site.form.endpoint(site.contact.email);
+---
+
+<section id="contacto" class="section contact" aria-labelledby="contacto-title">
+  <div class="container contact-grid">
+    <div class="contact-info">
+      <div class="contact-img" aria-hidden="true">
+        <Picture name="interior-planta-baja" widths={[800, 1400]} alt="" sizes="(min-width: 1000px) 40vw, 100vw" />
+      </div>
+      <div class="contact-info-body">
+        <p class="eyebrow">09 — Contacto</p>
+        <h2 id="contacto-title" class="h-section">Agenda tu <em>visita</em></h2>
+        <p class="lead">Conoce las casas, recorre la privada y descubre lo cerca que estarás de todo.</p>
+
+        <ul class="contact-list">
+          <li>
+            <span class="ci"><Icon name="phone" size={20} /></span>
+            <div><small>Llámanos</small><a href={`tel:${site.contact.phoneE164}`}>{site.contact.phoneDisplay}</a></div>
+          </li>
+          <li>
+            <span class="ci"><Icon name="whatsapp" size={20} /></span>
+            <div><small>WhatsApp</small><a href={waLink()} target="_blank" rel="noopener">{site.contact.phoneDisplay}</a></div>
+          </li>
+          <li>
+            <span class="ci"><Icon name="mail" size={20} /></span>
+            <div><small>Correo</small><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></div>
+          </li>
+          <li>
+            <span class="ci"><Icon name="pin" size={20} /></span>
+            <div><small>Visítanos</small><a href={site.maps.link} target="_blank" rel="noopener">{site.address.street}, {site.address.postalCode} Querétaro</a></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <form class="contact-form" data-contact-form data-endpoint={endpoint} data-wa={site.contact.whatsapp} novalidate>
+      <h3 class="form-title">Déjanos tus datos</h3>
+      <p class="form-sub">Elige cómo enviarlos: por WhatsApp o por correo. Te respondemos a la brevedad.</p>
+
+      <div class="form-grid">
+        <div class="field span-2">
+          <label for="f-name">Nombre completo *</label>
+          <input id="f-name" name="nombre" autocomplete="name" required minlength="3" />
+          <p class="error" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="f-phone">Teléfono / WhatsApp *</label>
+          <input id="f-phone" name="telefono" type="tel" autocomplete="tel" inputmode="tel" required pattern="[\d\s()+-]{10,}" />
+          <p class="error" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="f-email">Correo electrónico</label>
+          <input id="f-email" name="correo" type="email" autocomplete="email" />
+          <p class="error" aria-live="polite"></p>
+        </div>
+        <div class="field">
+          <label for="f-model">Modelo de interés</label>
+          <select id="f-model" name="modelo">
+            <option value="">Aún no lo sé</option>
+            {models.map((m) => <option value={m.name}>{m.name}</option>)}
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-pay">Forma de pago</label>
+          <select id="f-pay" name="forma_pago">
+            <option value="">Selecciona una opción</option>
+            <option>Crédito INFONAVIT</option>
+            <option>Crédito hipotecario</option>
+            <option>Contado</option>
+          </select>
+        </div>
+        <div class="field span-2">
+          <label for="f-msg">Mensaje</label>
+          <textarea id="f-msg" name="mensaje" rows="4" placeholder="Me gustaría agendar una visita el fin de semana…"></textarea>
+        </div>
+        <input class="hp" type="text" name="_honey" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <label class="consent span-2">
+          <input type="checkbox" name="acepto" required />
+          <span>He leído y acepto el <a href="/aviso-de-privacidad/" target="_blank">aviso de privacidad</a>. *</span>
+        </label>
+        <p class="error consent-error span-2" aria-live="polite"></p>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn btn--wa" type="submit" value="whatsapp" data-submit="whatsapp">
+          <Icon name="whatsapp" /> Enviar por WhatsApp
+        </button>
+        <button class="btn" type="submit" value="email" data-submit="email">
+          <Icon name="mail" /> Enviar por correo
+        </button>
+      </div>
+      <p class="form-status" role="status" aria-live="polite" data-form-status></p>
+    </form>
+  </div>
+</section>
+
+<style>
+  .contact { background: var(--sand); }
+  .contact-grid { display: grid; gap: 24px; }
+  @media (min-width: 1000px) { .contact-grid { grid-template-columns: 0.9fr 1.1fr; align-items: stretch; } }
+
+  .contact-info { position: relative; border-radius: var(--radius-l); overflow: hidden; color: #fff; min-height: 560px; display: flex; }
+  .contact-img { position: absolute; inset: 0; }
+  .contact-img :global(picture), .contact-img :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .contact-img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(6,28,69,0.55) 0%, rgba(6,28,69,0.92) 60%); }
+  .contact-info-body { position: relative; margin-top: auto; padding: clamp(28px, 4vw, 48px); display: grid; gap: 18px; }
+  .contact-info h2 { color: #fff; }
+  .contact-info .h-section em { color: var(--yellow); }
+  .contact-info .eyebrow { color: var(--yellow); }
+  .contact-info .lead { color: #d3dbea; }
+  .contact-list { list-style: none; padding: 0; margin: 8px 0 0; display: grid; gap: 14px; }
+  .contact-list li { display: flex; gap: 14px; align-items: center; }
+  .ci { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgba(254,196,1,0.5); color: var(--yellow); flex: none; }
+  .contact-list small { display: block; font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #a9b7d1; font-weight: 700; }
+  .contact-list a { font-weight: 600; word-break: break-word; }
+  .contact-list a:hover { color: var(--yellow); }
+
+  .contact-form { background: #fff; border-radius: var(--radius-l); padding: clamp(26px, 4vw, 48px); box-shadow: var(--shadow-s); border: 1px solid var(--line); }
+  .form-title { font-size: clamp(30px, 3vw, 40px); }
+  .form-sub { color: var(--muted); margin: 8px 0 28px; font-size: 15px; }
+  .form-grid { display: grid; gap: 16px; }
+  @media (min-width: 640px) { .form-grid { grid-template-columns: 1fr 1fr; } .span-2 { grid-column: span 2; } }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+  .consent { display: flex; gap: 12px; align-items: flex-start; font-size: 14px; color: var(--muted); cursor: pointer; }
+  .consent input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--navy); flex: none; }
+  .consent a { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+  .consent-error { font-size: 13px; color: #b3321e; margin-top: -8px; }
+  .form-actions { display: grid; gap: 10px; margin-top: 26px; }
+  @media (min-width: 560px) { .form-actions { grid-template-columns: 1fr 1fr; } }
+  .form-status { margin-top: 16px; font-size: 14.5px; font-weight: 600; }
+  .form-status.is-ok { color: #157a3c; }
+  .form-status.is-error { color: #b3321e; }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  if (form) {
+    const status = form.querySelector<HTMLElement>('[data-form-status]')!;
+    const setStatus = (msg: string, kind: 'ok' | 'error' | '' = '') => {
+      status.textContent = msg;
+      status.className = `form-status ${kind ? `is-${kind}` : ''}`;
+    };
+
+    const messages: Record<string, string> = {
+      nombre: 'Escribe tu nombre completo.',
+      telefono: 'Escribe un teléfono válido de 10 dígitos.',
+      correo: 'Revisa el formato de tu correo.',
+    };
+
+    const validate = (needEmail: boolean) => {
+      let ok = true;
+      let first: HTMLElement | null = null;
+      form.querySelectorAll<HTMLInputElement>('.field input').forEach((input) => {
+        const err = input.parentElement?.querySelector<HTMLElement>('.error');
+        input.setCustomValidity('');
+        if (input.name === 'correo' && needEmail && !input.value.trim()) input.setCustomValidity('required');
+        const valid = input.checkValidity();
+        input.setAttribute('aria-invalid', String(!valid));
+        if (err) err.textContent = valid ? '' : input.name === 'correo' && !input.value ? 'Para recibir respuesta por correo, escribe tu email.' : messages[input.name] ?? '';
+        if (!valid) { ok = false; first ??= input; }
+      });
+      const consent = form.querySelector<HTMLInputElement>('input[name="acepto"]')!;
+      const cErr = form.querySelector<HTMLElement>('.consent-error')!;
+      cErr.textContent = consent.checked ? '' : 'Debes aceptar el aviso de privacidad para continuar.';
+      if (!consent.checked) { ok = false; first ??= consent; }
+      first?.focus();
+      return ok;
+    };
+
+    const data = () => {
+      const fd = new FormData(form);
+      return {
+        nombre: String(fd.get('nombre') ?? '').trim(),
+        telefono: String(fd.get('telefono') ?? '').trim(),
+        correo: String(fd.get('correo') ?? '').trim(),
+        modelo: String(fd.get('modelo') ?? ''),
+        forma_pago: String(fd.get('forma_pago') ?? ''),
+        mensaje: String(fd.get('mensaje') ?? '').trim(),
+        honey: String(fd.get('_honey') ?? ''),
+      };
+    };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const via = ((e as SubmitEvent).submitter as HTMLButtonElement | null)?.value ?? 'whatsapp';
+      setStatus('');
+      if (!validate(via === 'email')) return;
+      const d = data();
+      if (d.honey) return; // bot
+
+      if (via === 'whatsapp') {
+        const text = [
+          'Hola, quiero información de Residencial Gema.',
+          `• Nombre: ${d.nombre}`,
+          `• Teléfono: ${d.telefono}`,
+          d.correo && `• Correo: ${d.correo}`,
+          d.modelo && `• Modelo de interés: ${d.modelo}`,
+          d.forma_pago && `• Forma de pago: ${d.forma_pago}`,
+          d.mensaje && `• Mensaje: ${d.mensaje}`,
+        ].filter(Boolean).join('\n');
+        window.open(`https://wa.me/${form.dataset.wa}?text=${encodeURIComponent(text)}`, '_blank', 'noopener');
+        setStatus('Abrimos WhatsApp con tu mensaje listo para enviar.', 'ok');
+        return;
+      }
+
+      const btn = form.querySelector<HTMLButtonElement>('[data-submit="email"]')!;
+      btn.disabled = true;
+      setStatus('Enviando…');
+      try {
+        const res = await fetch(form.dataset.endpoint!, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({
+            _subject: `Nuevo prospecto Residencial Gema — ${d.nombre}`,
+            _template: 'table',
+            _replyto: d.correo,
+            Nombre: d.nombre,
+            Teléfono: d.telefono,
+            Correo: d.correo,
+            'Modelo de interés': d.modelo || 'Sin definir',
+            'Forma de pago': d.forma_pago || 'Sin definir',
+            Mensaje: d.mensaje || '—',
+            Origen: location.href,
+          }),
+        });
+        if (!res.ok) throw new Error(String(res.status));
+        form.reset();
+        setStatus('¡Gracias! Recibimos tus datos; un asesor te contactará muy pronto.', 'ok');
+        (window as any).dataLayer?.push({ event: 'lead', method: 'email' });
+      } catch {
+        setStatus('No pudimos enviar tu mensaje. Inténtalo de nuevo o escríbenos por WhatsApp.', 'error');
+      } finally {
+        btn.disabled = false;
+      }
+    });
+
+    // Prellenado desde el cotizador
+    window.addEventListener('gema:prefill', (ev) => {
+      const { model, payment, message } = (ev as CustomEvent).detail ?? {};
+      const set = (name: string, v?: string) => {
+        const el = form.elements.namedItem(name) as HTMLInputElement | HTMLSelectElement | null;
+        if (el && v) el.value = v;
+      };
+      set('modelo', model);
+      set('forma_pago', payment);
+      set('mensaje', message);
+      setTimeout(() => form.querySelector<HTMLInputElement>('#f-name')?.focus({ preventScroll: true }), 600);
+    });
+  }
+</script>

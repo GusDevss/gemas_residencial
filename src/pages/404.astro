@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+---
+<Base title="Página no encontrada | Residencial Gema" noindex>
+  <Header />
+  <main id="contenido" class="nf">
+    <div class="container nf-inner">
+      <p class="eyebrow">Error 404</p>
+      <h1 class="h-display">Esta página <em>no existe</em></h1>
+      <p class="lead">Pero tu nueva casa a 2 km del Centro Histórico de Querétaro sí.</p>
+      <a class="btn" href="/">Volver al inicio</a>
+    </div>
+  </main>
+  <Footer />
+</Base>
+<style>
+  .nf { min-height: 80vh; display: grid; place-items: center; padding: calc(var(--header-h) + 60px) 0 80px; }
+  .nf-inner { display: grid; gap: 24px; justify-items: center; text-align: center; }
+</style>

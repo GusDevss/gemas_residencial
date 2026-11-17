@@ -1,0 +1,31 @@
+---
+/** Imagen responsiva (WebP + JPG de respaldo) a partir de /public/img/{name}-{width}.{ext} */
+interface Props {
+  name: string;
+  widths: number[];
+  alt: string;
+  sizes?: string;
+  class?: string;
+  eager?: boolean;
+  width?: number;
+  height?: number;
+}
+const { name, widths, alt, sizes = '100vw', class: cls, eager = false, width, height } = Astro.props;
+const set = (ext: string) => widths.map((w) => `/img/${name}-${w}.${ext} ${w}w`).join(', ');
+const fallback = `/img/${name}-${widths[Math.min(1, widths.length - 1)]}.jpg`;
+---
+<picture>
+  <source type="image/webp" srcset={set('webp')} sizes={sizes} />
+  <img
+    class={cls}
+    src={fallback}
+    srcset={set('jpg')}
+    sizes={sizes}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={eager ? 'eager' : 'lazy'}
+    decoding={eager ? 'sync' : 'async'}
+    fetchpriority={eager ? 'high' : undefined}
+  />
+</picture>

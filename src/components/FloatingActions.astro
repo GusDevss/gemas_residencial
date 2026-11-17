@@ -1,0 +1,50 @@
+---
+import Icon from './Icon.astro';
+import { waLink } from '../config/site';
+---
+<div class="fab-wrap">
+  <button class="fab fab--top" type="button" data-to-top aria-label="Regresar al inicio">
+    <Icon name="arrowUp" size={22} />
+  </button>
+  <a class="fab fab--wa" href={waLink()} target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+    <span class="fab-tip">¿Hablamos?</span>
+    <Icon name="whatsapp" size={30} />
+  </a>
+</div>
+
+<style>
+  .fab-wrap { position: fixed; right: max(16px, env(safe-area-inset-right)); bottom: max(16px, env(safe-area-inset-bottom)); z-index: 90; display: grid; gap: 12px; justify-items: end; }
+  .fab {
+    width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; border: 0; box-shadow: var(--shadow);
+    transition: transform 0.4s var(--ease), opacity 0.4s, visibility 0.4s;
+  }
+  .fab:hover { transform: translateY(-3px) scale(1.04); }
+  .fab--wa { position: relative; background: #25d366; color: #fff; }
+  .fab--wa::before {
+    content: ''; position: absolute; inset: 0; border-radius: 50%; border: 2px solid #25d366; animation: ring 2.6s var(--ease) infinite;
+  }
+  @keyframes ring { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(1.55); opacity: 0; } }
+  .fab-tip {
+    position: absolute; right: 70px; top: 50%; transform: translateY(-50%); white-space: nowrap;
+    background: #fff; color: var(--navy); font-size: 13px; font-weight: 700; padding: 8px 14px; border-radius: 999px; box-shadow: var(--shadow-s);
+    opacity: 0; pointer-events: none; transition: opacity 0.3s;
+  }
+  .fab--wa:hover .fab-tip { opacity: 1; }
+  .fab--top { width: 48px; height: 48px; background: var(--navy); color: #fff; opacity: 0; visibility: hidden; transform: translateY(12px); }
+  .fab--top.is-visible { opacity: 1; visibility: visible; transform: none; }
+  .fab--top:hover { background: var(--blue); }
+  @media (max-width: 560px) { .fab { width: 54px; height: 54px; } .fab--top { width: 44px; height: 44px; } }
+</style>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-to-top]');
+  if (btn) {
+    const update = () => btn.classList.toggle('is-visible', window.scrollY > window.innerHeight * 0.8);
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+    btn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      document.querySelector<HTMLElement>('.brand')?.focus({ preventScroll: true });
+    });
+  }
+</script>

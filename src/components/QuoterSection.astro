@@ -1,0 +1,56 @@
+---
+import Icon from './Icon.astro';
+import Quoter from './quoter/Quoter.tsx';
+
+const payments = [
+  { icon: 'badge', title: 'Crédito INFONAVIT', text: 'Utiliza tu crédito y tu subcuenta de vivienda para comprar tu casa.' },
+  { icon: 'bank', title: 'Crédito hipotecario', text: 'Financiamiento con la institución bancaria de tu preferencia.' },
+  { icon: 'wallet', title: 'Contado', text: 'Pregunta por el esquema de apartado y pagos para compra de contado.' },
+] as const;
+---
+
+<section id="cotizador" class="section section--sand quoter-section" aria-labelledby="cotizador-title">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div class="stack">
+        <p class="eyebrow reveal">06 — Cotizador</p>
+        <h2 id="cotizador-title" class="h-section reveal">Calcula tu <em>nueva casa</em></h2>
+      </div>
+      <p class="lead reveal">
+        Elige modelo y forma de pago para obtener una estimación al instante. Después, un asesor te enviará tu
+        cotización formal sin compromiso.
+      </p>
+    </div>
+
+    <div class="reveal">
+      <Quoter client:visible />
+    </div>
+
+    <div class="payments">
+      {payments.map((p, i) => (
+        <article class="payment reveal" data-delay={String(i + 1)}>
+          <span class="payment-icon"><Icon name={p.icon} size={26} /></span>
+          <div>
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="payments-note">
+      Las condiciones de enganche, monto de crédito y proceso de autorización están sujetas al perfil y
+      precalificación de cada cliente.
+    </p>
+  </div>
+</section>
+
+<style>
+  .stack { display: grid; gap: 18px; }
+  .payments { display: grid; gap: 14px; margin-top: 28px; }
+  @media (min-width: 860px) { .payments { grid-template-columns: repeat(3, 1fr); } }
+  .payment { display: flex; gap: 16px; align-items: flex-start; padding: 22px; border-radius: var(--radius); background: rgba(255,255,255,0.6); border: 1px solid var(--line); }
+  .payment-icon { width: 50px; height: 50px; flex: none; border-radius: 50%; display: grid; place-items: center; background: var(--navy); color: var(--yellow); }
+  .payment h3 { font-family: var(--font-body); font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .payment p { font-size: 14px; color: var(--muted); line-height: 1.55; }
+  .payments-note { margin-top: 16px; font-size: 13px; color: var(--muted); }
+</style>

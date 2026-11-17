@@ -1,0 +1,104 @@
+---
+import Icon from './Icon.astro';
+import Picture from './Picture.astro';
+import { project } from '../config/site';
+---
+
+<section id="concepto" class="section section--paper concept" aria-labelledby="concepto-title">
+  <div class="container concept-grid">
+    <div class="concept-media reveal">
+      <div class="concept-img concept-img--a">
+        <Picture
+          name="interior-estancia"
+          widths={[800, 1400]}
+          alt="Estancia luminosa con piso porcelánico y cancel hacia el patio en una casa de Residencial Gema"
+          sizes="(min-width: 1000px) 30vw, 70vw"
+          width={800}
+          height={1067}
+        />
+      </div>
+      <div class="concept-img concept-img--b">
+        <Picture
+          name="interior-cocina-2"
+          widths={[800, 1400]}
+          alt="Cocina integral y barra desayunadora en casa muestra de Residencial Gema"
+          sizes="(min-width: 1000px) 20vw, 45vw"
+          width={800}
+          height={1422}
+        />
+      </div>
+      <div class="concept-seal" aria-hidden="true">
+        <svg viewBox="0 0 200 200">
+          <defs><path id="seal-path" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" /></defs>
+          <text><textPath href="#seal-path">SOLO 19 VIVIENDAS · PRIVADA RESIDENCIAL · QUERÉTARO · </textPath></text>
+        </svg>
+        <span>19</span>
+      </div>
+    </div>
+
+    <div class="concept-copy">
+      <p class="eyebrow reveal">02 — El concepto</p>
+      <h2 id="concepto-title" class="h-section reveal">
+        Una privada de <em>solo {project.totalHomes} casas</em>
+      </h2>
+      <p class="lead reveal">
+        En el {project.condominium} cada familia tiene su espacio. Un proyecto horizontal de escala privada,
+        pensado para la convivencia, la tranquilidad y una vida cotidiana práctica cerca de todo.
+      </p>
+
+      <div class="features">
+        <article class="feature reveal" data-delay="1">
+          <Icon name="layers" size={28} />
+          <h3>Escala privada</h3>
+          <p>Únicamente {project.totalHomes} viviendas: menos vecinos, más privacidad y una comunidad que se conoce.</p>
+        </article>
+        <article class="feature reveal" data-delay="2">
+          <Icon name="shield" size={28} />
+          <h3>Seguridad</h3>
+          <p>Acceso controlado con caseta de vigilancia y barda perimetral, el concepto de privada residencial.</p>
+        </article>
+        <article class="feature reveal" data-delay="3">
+          <Icon name="sun" size={28} />
+          <h3>Diseño contemporáneo</h3>
+          <p>Fachadas de vanguardia, espacios bien distribuidos y luz natural en cada ambiente.</p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .concept-grid { display: grid; gap: clamp(56px, 7vw, 100px); align-items: center; }
+  @media (min-width: 1000px) { .concept-grid { grid-template-columns: 0.95fr 1.05fr; } }
+
+  .concept-media { position: relative; min-height: 520px; max-width: 560px; width: 100%; justify-self: center; }
+  .concept-img { position: absolute; overflow: hidden; box-shadow: var(--shadow); }
+  .concept-img :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .concept-img--a { left: 0; top: 0; width: 70%; height: 86%; border-radius: var(--arch); }
+  .concept-img--b { right: 0; bottom: 0; width: 44%; height: 54%; border-radius: var(--radius-l); border: 8px solid #fff; }
+  .concept-seal {
+    position: absolute; right: 6%; top: 4%; width: 132px; height: 132px; border-radius: 50%;
+    background: var(--yellow); color: var(--navy-900); display: grid; place-items: center; box-shadow: var(--shadow);
+  }
+  .concept-seal svg { position: absolute; inset: 0; width: 100%; height: 100%; animation: spin 26s linear infinite; }
+  .concept-seal text { font-size: 15px; font-weight: 700; letter-spacing: 2.6px; fill: currentColor; font-family: var(--font-body); }
+  .concept-seal span { font-family: var(--font-display); font-size: 46px; font-weight: 600; line-height: 1; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  @media (max-width: 560px) {
+    .concept-media { min-height: 420px; }
+    .concept-seal { width: 108px; height: 108px; right: 0; }
+    .concept-seal span { font-size: 38px; }
+  }
+
+  .concept-copy { display: grid; gap: 24px; }
+  .features { display: grid; gap: 14px; margin-top: 12px; }
+  
+  .feature {
+    padding: 22px 24px; border-radius: var(--radius); background: var(--ivory); border: 1px solid var(--line);
+    display: grid; grid-template-columns: 48px 1fr; column-gap: 18px; row-gap: 4px; align-items: start; transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), background 0.3s;
+  }
+  .feature:hover { transform: translateY(-6px); box-shadow: var(--shadow); background: #fff; }
+  .feature :global(svg) { color: var(--gold-600); grid-row: span 2; width: 48px; height: 48px; padding: 10px; border-radius: 50%; background: #fff; border: 1px solid rgba(223,178,1,0.45); }
+  .feature h3 { font-size: 24px; }
+  .feature p { font-size: 14.5px; color: var(--muted); line-height: 1.55; }
+</style>

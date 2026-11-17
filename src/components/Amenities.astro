@@ -1,0 +1,70 @@
+---
+import Icon from './Icon.astro';
+
+const amenities = [
+  { icon: 'kids', title: 'Área de juegos infantiles', text: 'Espacios seguros pensados para que los niños jueguen cerca de casa.' },
+  { icon: 'ball', title: 'Cancha de básquetbol', text: 'Cancha de usos múltiples para el deporte y la recreación en familia.' },
+  { icon: 'tree', title: 'Áreas verdes', text: 'Jardines para convivir, descansar y disfrutar actividades al aire libre.' },
+  { icon: 'hall', title: 'Salón de usos múltiples', text: 'El lugar ideal para reuniones, celebraciones y eventos entre residentes.' },
+  { icon: 'shield', title: 'Acceso controlado', text: 'Caseta de acceso, vigilancia y barda perimetral para tu tranquilidad.' },
+] as const;
+---
+
+<section id="amenidades" class="section section--paper amenities" aria-labelledby="amenidades-title">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <p class="eyebrow reveal">04 — Amenidades</p>
+      <h2 id="amenidades-title" class="h-section reveal">Pensadas para la <em>vida en familia</em></h2>
+      <p class="lead reveal">
+        Convivencia, recreación y actividad física dentro de una privada segura, sin tener que salir de casa.
+      </p>
+    </div>
+
+    <div class="amen-grid">
+      <div class="amen-hero reveal">
+        <p class="amen-quote">Vivir en Querétaro,<br /><em>vivir como siempre soñaste.</em></p>
+        <a href="#contacto" class="btn btn--gold">Agenda tu visita <Icon name="arrow" /></a>
+      </div>
+      {amenities.map((a, i) => (
+        <article class="amen reveal" data-delay={String((i % 3) + 1)}>
+          <span class="amen-num">{String(i + 1).padStart(2, '0')}</span>
+          <span class="amen-icon"><Icon name={a.icon} size={30} /></span>
+          <h3>{a.title}</h3>
+          <p>{a.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .amen-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+  @media (min-width: 640px) { .amen-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1040px) { .amen-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .amen-hero {
+    border-radius: var(--radius-l); padding: 36px; display: flex; flex-direction: column; justify-content: space-between; gap: 30px;
+    background:
+      radial-gradient(90% 90% at 100% 0%, rgba(254,196,1,0.22), transparent 55%),
+      linear-gradient(160deg, var(--blue), var(--navy-900));
+    color: #fff; min-height: 300px; align-items: flex-start;
+  }
+  .amen-quote { font-family: var(--font-display); font-size: clamp(30px, 3vw, 40px); line-height: 1.1; }
+  .amen-quote em { color: var(--yellow); }
+
+  .amen {
+    position: relative; padding: 34px 30px; border-radius: var(--radius-l); background: var(--ivory);
+    border: 1px solid var(--line); display: grid; gap: 12px; align-content: start; overflow: hidden;
+    transition: background 0.4s, transform 0.6s var(--ease), box-shadow 0.6s var(--ease);
+  }
+  .amen:hover { background: #fff; transform: translateY(-6px); box-shadow: var(--shadow); }
+  .amen-num { position: absolute; right: 24px; top: 18px; font-family: var(--font-display); font-size: 54px; color: rgba(10,42,99,0.07); line-height: 1; }
+  .amen-icon {
+    width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center;
+    background: #fff; color: var(--navy); border: 1px solid rgba(223,178,1,0.5); margin-bottom: 8px;
+    transition: background 0.4s, color 0.4s;
+  }
+  .amen:hover .amen-icon { background: var(--navy); color: var(--yellow); }
+  .amen h3 { font-size: 27px; }
+  .amen p { font-size: 15px; color: var(--muted); }
+</style>

@@ -1,0 +1,85 @@
+---
+import Icon from './Icon.astro';
+import { project } from '../config/site';
+
+const steps = [
+  { date: project.salesStart, title: 'Inicio de ventas', text: 'Arranca el programa de comercialización de las 19 viviendas.', state: 'done' },
+  { date: 'Hoy', title: 'Comercialización', text: 'Aparta tu casa y elige tu modelo mientras hay disponibilidad.', state: 'current' },
+  { date: project.deedsStart, title: 'Inicio de escrituración', text: `Escrituración proyectada con un ritmo estimado de ${project.deedsPerMonth} viviendas por mes.`, state: '' },
+  { date: project.deedsEnd, title: 'Cierre del proyecto', text: 'Conclusión proyectada de la escrituración de todas las viviendas.', state: '' },
+];
+---
+
+<section id="avance" class="section section--navy timeline-section" aria-labelledby="avance-title">
+  <div class="container">
+    <div class="section-head section-head--split">
+      <div class="stack">
+        <p class="eyebrow reveal">07 — Avance y entrega</p>
+        <h2 id="avance-title" class="h-section reveal">Tu casa, <em>paso a paso</em></h2>
+      </div>
+      <p class="lead reveal">
+        Fechas proyectadas del programa de ventas y escrituración. La fecha específica de entrega física se
+        confirmará conforme avance la obra.
+      </p>
+    </div>
+
+    <ol class="timeline">
+      {steps.map((s, i) => (
+        <li class={`step reveal ${s.state ? `is-${s.state}` : ''}`} data-delay={String(i + 1)}>
+          <span class="step-dot" aria-hidden="true">{s.state === 'done' ? <Icon name="check" size={16} /> : null}</span>
+          <p class="step-date">{s.date}</p>
+          <h3>{s.title}</h3>
+          <p class="step-text">{s.text}</p>
+        </li>
+      ))}
+    </ol>
+
+    <div class="availability reveal">
+      <div class="avail-copy">
+        <p class="avail-label">Disponibilidad</p>
+        <p class="avail-title"><strong>{project.totalHomes}</strong> viviendas en todo el desarrollo</p>
+        <p class="avail-text">Al ser un proyecto de escala privada, la disponibilidad es limitada. Consulta las casas disponibles hoy.</p>
+      </div>
+      <div class="avail-dots" aria-hidden="true">
+        {Array.from({ length: project.totalHomes }, () => <span><Icon name="home" size={18} /></span>)}
+      </div>
+      <a href="#contacto" class="btn btn--gold">Consultar disponibilidad <Icon name="arrow" /></a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .stack { display: grid; gap: 18px; }
+  .timeline { list-style: none; padding: 0; margin: 0; display: grid; gap: 0; position: relative; }
+  @media (min-width: 900px) { .timeline { grid-template-columns: repeat(4, 1fr); } }
+  .step { position: relative; padding: 0 24px 36px 40px; }
+  .step::before { content: ''; position: absolute; left: 11px; top: 24px; bottom: 0; width: 1px; background: var(--line-light); }
+  @media (min-width: 900px) {
+    .step { padding: 44px 24px 0 0; }
+    .step::before { left: 24px; right: 0; top: 11px; bottom: auto; width: auto; height: 1px; }
+  }
+  .step-dot {
+    position: absolute; left: 0; top: 0; width: 24px; height: 24px; border-radius: 50%;
+    border: 1px solid rgba(254,196,1,0.6); background: var(--navy); display: grid; place-items: center; color: var(--navy-900);
+  }
+  .step.is-done .step-dot { background: var(--yellow); border-color: var(--yellow); }
+  .step.is-current .step-dot { background: var(--navy); box-shadow: 0 0 0 6px rgba(254,196,1,0.18); }
+  .step.is-current .step-dot::after { content: ''; width: 10px; height: 10px; border-radius: 50%; background: var(--yellow); animation: pulse 2s infinite; }
+  @keyframes pulse { 50% { transform: scale(0.6); opacity: 0.6; } }
+  .step-date { font-family: var(--font-display); font-size: 30px; color: var(--yellow); line-height: 1.1; }
+  .step h3 { font-family: var(--font-body); font-size: 16px; font-weight: 700; margin: 8px 0 6px; }
+  .step-text { font-size: 14.5px; color: #b7c3da; }
+
+  .availability {
+    margin-top: clamp(40px, 6vw, 70px); display: grid; gap: 26px; align-items: center;
+    padding: clamp(24px, 4vw, 40px); border-radius: var(--radius-l); background: rgba(255,255,255,0.05); border: 1px solid var(--line-light);
+  }
+  @media (min-width: 1000px) { .availability { grid-template-columns: 1fr auto auto; } }
+  .avail-label { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 700; color: var(--yellow); }
+  .avail-title { font-family: var(--font-display); font-size: 32px; color: #fff; margin: 6px 0; line-height: 1.1; }
+  .avail-title strong { color: var(--yellow); font-weight: 600; }
+  .avail-text { font-size: 14.5px; color: #b7c3da; max-width: 46ch; }
+  .avail-dots { display: grid; grid-template-columns: repeat(10, 30px); gap: 6px; }
+  .avail-dots span { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; background: rgba(254,196,1,0.12); color: var(--yellow); }
+  @media (max-width: 420px) { .avail-dots { grid-template-columns: repeat(7, 30px); } }
+</style>

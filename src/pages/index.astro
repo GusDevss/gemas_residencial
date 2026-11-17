@@ -1,0 +1,102 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Location from '../components/Location.astro';
+import Concept from '../components/Concept.astro';
+import Models from '../components/Models.astro';
+import Amenities from '../components/Amenities.astro';
+import Gallery from '../components/Gallery.astro';
+import QuoterSection from '../components/QuoterSection.astro';
+import Timeline from '../components/Timeline.astro';
+import Faq from '../components/Faq.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import FloatingActions from '../components/FloatingActions.astro';
+import { site, project, models } from '../config/site';
+import { faqs } from '../config/faq';
+
+const url = site.url + '/';
+const address = {
+  '@type': 'PostalAddress',
+  streetAddress: site.address.street,
+  postalCode: site.address.postalCode,
+  addressLocality: site.address.city,
+  addressRegion: site.address.region,
+  addressCountry: site.address.country,
+};
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'RealEstateAgent',
+    '@id': `${url}#organizacion`,
+    name: site.name,
+    url,
+    logo: `${site.url}/img/logo-gema.png`,
+    image: `${site.url}/img/fachada-coral-1400.jpg`,
+    description: site.description,
+    telephone: site.contact.phoneE164,
+    email: site.contact.email,
+    address,
+    hasMap: site.maps.link,
+    areaServed: { '@type': 'City', name: 'Santiago de Querétaro' },
+    priceRange: `Desde ${project.priceFromLabel}`,
+    sameAs: Object.values(site.social).filter(Boolean),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Residence',
+    '@id': `${url}#residencial`,
+    name: `${site.name} — ${project.condominium}`,
+    description: `Desarrollo residencial horizontal de ${project.totalHomes} viviendas unifamiliares en condominio, a ${project.distanceToCenterKm} km del Centro Histórico de Querétaro.`,
+    address,
+    url,
+    image: [`${site.url}/img/fachada-coral-1400.jpg`, `${site.url}/img/fachada-coral-ampliada-900.jpg`],
+    amenityFeature: [
+      'Área de juegos infantiles',
+      'Cancha de básquetbol / usos múltiples',
+      'Áreas verdes',
+      'Salón de usos múltiples',
+      'Acceso controlado y vigilancia',
+    ].map((name) => ({ '@type': 'LocationFeatureSpecification', name, value: true })),
+    containsPlace: models.map((m) => ({ '@type': 'SingleFamilyResidence', name: `Modelo ${m.name}`, description: m.description })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${url}#sitio`,
+    url,
+    name: site.name,
+    inLanguage: 'es-MX',
+    publisher: { '@id': `${url}#organizacion` },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
+---
+
+<Base jsonLd={jsonLd}>
+  <link slot="head" rel="preload" as="image" type="image/webp"
+    href="/img/fachada-coral-1000.webp"
+    imagesrcset="/img/fachada-coral-600.webp 600w, /img/fachada-coral-1000.webp 1000w, /img/fachada-coral-1400.webp 1400w"
+    imagesizes="(min-width: 980px) 44vw, 92vw" />
+  <Header />
+  <main id="contenido">
+    <Hero />
+    <Location />
+    <Concept />
+    <Models />
+    <Amenities />
+    <Gallery />
+    <QuoterSection />
+    <Timeline />
+    <Faq />
+    <Contact />
+  </main>
+  <Footer />
+  <FloatingActions />
+</Base>
