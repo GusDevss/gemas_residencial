@@ -3,7 +3,8 @@ import Icon from './Icon.astro';
 import Picture from './Picture.astro';
 import { models, site, waLink } from '../config/site';
 
-const endpoint = site.form.endpoint(site.contact.email);
+const hasEmail = Boolean(site.contact.email);
+const endpoint = hasEmail ? site.form.endpoint(site.contact.email) : '';
 ---
 
 <section id="contacto" class="section contact" aria-labelledby="contacto-title">
@@ -26,10 +27,12 @@ const endpoint = site.form.endpoint(site.contact.email);
             <span class="ci"><Icon name="whatsapp" size={20} /></span>
             <div><small>WhatsApp</small><a href={waLink()} target="_blank" rel="noopener">{site.contact.phoneDisplay}</a></div>
           </li>
-          <li>
-            <span class="ci"><Icon name="mail" size={20} /></span>
-            <div><small>Correo</small><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></div>
-          </li>
+          {hasEmail && (
+            <li>
+              <span class="ci"><Icon name="mail" size={20} /></span>
+              <div><small>Correo</small><a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></div>
+            </li>
+          )}
           <li>
             <span class="ci"><Icon name="pin" size={20} /></span>
             <div><small>Visítanos</small><a href={site.maps.link} target="_blank" rel="noopener">{site.address.street}, {site.address.postalCode} Querétaro</a></div>
@@ -40,7 +43,11 @@ const endpoint = site.form.endpoint(site.contact.email);
 
     <form class="contact-form" data-contact-form data-endpoint={endpoint} data-wa={site.contact.whatsapp} novalidate>
       <h3 class="form-title">Déjanos tus datos</h3>
-      <p class="form-sub">Elige cómo enviarlos: por WhatsApp o por correo. Te respondemos a la brevedad.</p>
+      <p class="form-sub">
+        {hasEmail
+          ? 'Elige cómo enviarlos: por WhatsApp o por correo. Te respondemos a la brevedad.'
+          : 'Envíalos por WhatsApp con un clic y un asesor te responde a la brevedad.'}
+      </p>
 
       <div class="form-grid">
         <div class="field span-2">
@@ -86,13 +93,15 @@ const endpoint = site.form.endpoint(site.contact.email);
         <p class="error consent-error span-2" aria-live="polite"></p>
       </div>
 
-      <div class="form-actions">
+      <div class={`form-actions ${hasEmail ? '' : 'is-single'}`}>
         <button class="btn btn--wa" type="submit" value="whatsapp" data-submit="whatsapp">
           <Icon name="whatsapp" /> Enviar por WhatsApp
         </button>
-        <button class="btn" type="submit" value="email" data-submit="email">
-          <Icon name="mail" /> Enviar por correo
-        </button>
+        {hasEmail && (
+          <button class="btn" type="submit" value="email" data-submit="email">
+            <Icon name="mail" /> Enviar por correo
+          </button>
+        )}
       </div>
       <p class="form-status" role="status" aria-live="polite" data-form-status></p>
     </form>
@@ -131,7 +140,7 @@ const endpoint = site.form.endpoint(site.contact.email);
   .consent a { color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
   .consent-error { font-size: 13px; color: #b3321e; margin-top: -8px; }
   .form-actions { display: grid; gap: 10px; margin-top: 26px; }
-  @media (min-width: 560px) { .form-actions { grid-template-columns: 1fr 1fr; } }
+  @media (min-width: 560px) { .form-actions { grid-template-columns: 1fr 1fr; } .form-actions.is-single { grid-template-columns: 1fr; } }
   .form-status { margin-top: 16px; font-size: 14.5px; font-weight: 600; }
   .form-status.is-ok { color: #157a3c; }
   .form-status.is-error { color: #b3321e; }

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { models, project, quoter, waLink } from '../../config/site';
+import { models, project, quoter, site, waLink } from '../../config/site';
 import './quoter.css';
 
 type Payment = 'hipotecario' | 'infonavit' | 'contado';
@@ -245,7 +245,7 @@ export default function Quoter() {
             Cotización formal por WhatsApp
           </a>
           <button type="button" className="btn btn--ghost-light btn--block" onClick={sendToForm}>
-            Recibirla por correo
+            {site.contact.email ? 'Recibirla por correo' : 'Dejar mis datos a un asesor'}
           </button>
         </div>
 

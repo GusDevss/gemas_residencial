@@ -14,7 +14,7 @@ import { site } from '../../config/site';
       <p class="legal-note">Documento base. ⚠️ Debe ser revisado y completado por el área legal del desarrollador (razón social y domicilio del responsable).</p>
 
       <h2>Responsable del tratamiento</h2>
-      <p>{site.name} (en adelante, “el Responsable”), con domicilio en {site.address.full}, es responsable del uso y protección de sus datos personales, conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p>
+      <p>{site.name} comercializado por {site.company.name} (en adelante, “el Responsable”), con domicilio en {site.address.full}, es responsable del uso y protección de sus datos personales, conforme a la Ley Federal de Protección de Datos Personales en Posesión de los Particulares.</p>
 
       <h2>Datos que recabamos</h2>
       <p>A través de nuestros formularios, WhatsApp, teléfono o correo podemos recabar: nombre, teléfono, correo electrónico, modelo de interés, forma de pago de preferencia y la información que usted nos comparta voluntariamente. No recabamos datos personales sensibles por estos medios.</p>
@@ -26,7 +26,9 @@ import { site } from '../../config/site';
       <p>Sus datos no serán transferidos a terceros sin su consentimiento, salvo las excepciones previstas por la ley o cuando sea necesario para trámites de crédito que usted solicite (por ejemplo, ante instituciones financieras o INFONAVIT).</p>
 
       <h2>Derechos ARCO</h2>
-      <p>Usted puede Acceder, Rectificar, Cancelar u Oponerse al tratamiento de sus datos, así como revocar su consentimiento, enviando una solicitud a <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a> con su nombre, el derecho que desea ejercer y una copia de su identificación oficial.</p>
+      <p>Usted puede Acceder, Rectificar, Cancelar u Oponerse al tratamiento de sus datos, así como revocar su consentimiento, enviando una solicitud {site.contact.email
+        ? <>a <a href={`mailto:${site.contact.email}`}>{site.contact.email}</a></>
+        : <>por WhatsApp o al teléfono <a href={`tel:${site.contact.phoneE164}`}>{site.contact.phoneDisplay}</a></>} con su nombre, el derecho que desea ejercer y una copia de su identificación oficial.</p>
 
       <h2>Cambios al aviso</h2>
       <p>Cualquier modificación a este aviso de privacidad se publicará en esta misma página.</p>

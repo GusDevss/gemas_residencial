@@ -30,8 +30,12 @@ export const site = {
     phoneE164: '+524423932090',
     /** Número de WhatsApp en formato internacional SIN "+" ni espacios */
     whatsapp: '524423932090',
-    /** Correo que recibe los formularios.  ⚠️ PENDIENTE: reemplazar por el correo real de ventas. */
-    email: 'ventas@residencialgema.com',
+    /**
+     * Correo que recibe los formularios. ⚠️ PENDIENTE: aún no existe.
+     * Mientras esté vacío (''), el sitio oculta el botón "Enviar por correo" y los enlaces de correo,
+     * y los prospectos llegan por WhatsApp. Al capturarlo (ej. 'ventas@residencialgema.com') se activa todo.
+     */
+    email: '' as string,
     whatsappGreeting: 'Hola, me interesa conocer Residencial Gema en Querétaro. ¿Me pueden dar más información?',
   },
 
@@ -58,6 +62,12 @@ export const site = {
   maps: {
     embed: 'https://www.google.com/maps?q=Av.+Tlacote+701,+76177+Santiago+de+Quer%C3%A9taro,+Qro.&output=embed',
     link: 'https://www.google.com/maps/search/?api=1&query=Av.+Tlacote+701,+76177+Santiago+de+Quer%C3%A9taro,+Qro.',
+  },
+
+  /** Inmobiliaria / empresa madre que comercializa el desarrollo */
+  company: {
+    name: 'Tegos',
+    url: '', // agrega el sitio de Tegos cuando quieras enlazarlo
   },
 
   social: {
